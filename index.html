@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="manifest" href="manifest.json">
@@ -26,7 +26,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Rounded","Segoe UI",sy
   padding:max(20px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(40px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));
   background-image:radial-gradient(900px 500px at 10% -10%,#ff3d7f22,transparent 60%),radial-gradient(800px 500px at 110% 10%,#8b5cf622,transparent 60%);background-attachment:fixed}
 .wrap{max-width:1040px;margin:0 auto;width:100%}
-html,body{overflow-x:hidden}
+html,body{overflow-x:hidden;max-width:100vw;overscroll-behavior-x:none}
+body{position:relative;touch-action:pan-y}
+.wrap>*,section>*{max-width:100%;min-width:0}
+.card,.tab,.hero,.tools,.progress{min-width:0;max-width:100%}
+.who b,.who small{max-width:100%}
 button,input,select{font:inherit;color:inherit}
 button{cursor:pointer;border:none;background:none}
 .hidden{display:none!important}
