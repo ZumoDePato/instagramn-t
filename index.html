@@ -278,7 +278,7 @@ const store = {
   del(k) { try { localStorage.removeItem(k); } catch {} }
 };
 
-let followers = new Map(), following = new Map();
+let followers = new Map(), following = new Map(), lastFiles = [];
 let tab = 'noback', hideDone = false, limit = 120;
 const done = new Set(store.get('done', []));
 
@@ -363,12 +363,14 @@ function ingest(name, text, counts) {
   if (/^followers_\d+\.json$/.test(base)) target = followers;
   else if (base === 'following.json' || (data && data.relationships_following)) target = following;
   if (!target) { counts.skip++; return; }
-  extract(data).forEach(([u, t]) => target.set(u, t));
+  const got = extract(data);
+  got.forEach(([u, t]) => target.set(u, t));
+  counts.files.push(base + ': ' + got.length);
   counts.ok++;
 }
 
 async function load(files) {
-  const counts = { ok: 0, html: 0, bad: 0, skip: 0 };
+  const counts = { ok: 0, html: 0, bad: 0, skip: 0, files: [] };
   toast('Leyendo tus datos…', 10000);
   for (const f of files) {
     try {
@@ -390,11 +392,11 @@ async function load(files) {
   if (!followers.size) toast('Falta el archivo de seguidores (followers_1.json).', 5000);
   else if (!following.size) toast('Falta el archivo de seguidos (following.json).', 5000);
   else toast(`✅ ${followers.size} seguidores y ${following.size} seguidos importados`);
-  save(); show();
+  lastFiles = counts.files; save(); show();
 }
 
 function save() {
-  store.set('ig_data', { followers: [...followers], following: [...following], at: Date.now() });
+  store.set('ig_data', { followers: [...followers], following: [...following], at: Date.now(), files: lastFiles });
 }
 
 /* ---------- vistas ---------- */
@@ -482,7 +484,10 @@ function render() {
   : `<div class="empty"><div class="e">${q ? '🔎' : (tab === 'noback' ? '🎉' : T.e)}</div>${q ? 'Nadie coincide con esa búsqueda' : (hideDone ? '¡Ya los has revisado todos!' : 'Nadie por aquí')}</div>`;
 
   const s = store.get('ig_data', null);
-  $('foot').textContent = s && s.at ? 'Datos importados el ' + new Date(s.at).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' }) : '';
+  const oldest = m => { let o = Infinity; for (const t of m.values()) if (t && t < o) o = t; return o === Infinity ? '—' : fmt(o); };
+  $('foot').innerHTML = s && s.at ? 'Datos importados el ' + esc(new Date(s.at).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' }))
+    + '<br>Archivos leídos: ' + esc((s.files || []).join(' · ') || '—')
+    + '<br>Seguidor más antiguo: ' + oldest(followers) + ' · Seguido más antiguo: ' + oldest(following) : '';
 }
 
 function toggleDone(u, force) {
