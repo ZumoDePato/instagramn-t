@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rubeats · Seguidores</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
+body{background:#0d0d14;color:#eee;min-height:100vh;padding:24px}
+h1{font-size:28px;background:linear-gradient(90deg,#f58529,#dd2a7b,#8134af);-webkit-background-clip:text;color:transparent;margin-bottom:6px}
+p.sub{color:#999;margin-bottom:20px}
+#drop{border:2px dashed #444;border-radius:16px;padding:40px;text-align:center;cursor:pointer;transition:.2s}
+#drop:hover,#drop.over{border-color:#dd2a7b;background:#1a1020}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:24px 0}
+.stat{background:#181824;border-radius:14px;padding:16px;cursor:pointer;border:2px solid transparent;transition:.2s}
+.stat.active{border-color:#dd2a7b}.stat b{font-size:30px;display:block}.stat span{color:#aaa;font-size:13px}
+.bar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+input[type=search]{flex:1;min-width:200px;padding:12px;border-radius:10px;border:none;background:#181824;color:#eee}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.card{background:#181824;border-radius:12px;padding:12px;display:flex;align-items:center;gap:12px;transition:.2s}
+.card.done{opacity:.35}
+.av{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:700;flex-shrink:0}
+.name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.name small{display:block;color:#888;font-size:11px}
+button,a.btn{border:none;border-radius:8px;padding:8px 12px;cursor:pointer;font-weight:600;text-decoration:none;font-size:13px}
+a.btn{background:linear-gradient(90deg,#dd2a7b,#8134af);color:#fff}
+button.chk{background:#2a2a3a;color:#ccc}
+.hidden{display:none}
+</style></head><body>
+<h1>Rubeats · Seguidores</h1>
+<p class="sub">Importa los archivos de Instagram (followers_1.json y following.json). Todo se procesa en tu navegador, nada se sube a ningún sitio.</p>
+<div id="drop">📂 Arrastra aquí tus archivos JSON o haz clic para elegirlos<input type="file" id="file" multiple accept=".json" class="hidden"></div>
+<div id="app" class="hidden">
+ <div class="stats">
+  <div class="stat active" data-tab="noback"><b id="n-noback">0</b><span>No me siguen de vuelta</span></div>
+  <div class="stat" data-tab="fans"><b id="n-fans">0</b><span>Me siguen y yo no</span></div>
+  <div class="stat" data-tab="mutual"><b id="n-mutual">0</b><span>Mutuos</span></div>
+  <div class="stat" data-tab="followers"><b id="n-followers">0</b><span>Seguidores</span></div>
+  <div class="stat" data-tab="following"><b id="n-following">0</b><span>Seguidos</span></div>
+ </div>
+ <div class="bar"><input type="search" id="q" placeholder="Buscar usuario..."><button class="chk" id="hide">Ocultar ya revisados</button><button class="chk" id="reset">Importar otros</button></div>
+ <div class="grid" id="list"></div>
+</div>
+<script>
+let followers=new Map(),following=new Map(),tab='noback',hideDone=false;
+const done=new Set(JSON.parse(localStorage.getItem('done')||'[]'));
+const $=id=>document.getElementById(id);
+function extract(obj){const out=[];(function walk(o){if(Array.isArray(o))o.forEach(walk);else if(o&&typeof o==='object'){if(o.string_list_data){const s=o.string_list_data[0]||{};const u=s.value||o.title||(s.href||'').split('/').filter(Boolean).pop();if(u)out.push({u:u.toLowerCase(),t:s.timestamp||0});}else Object.values(o).forEach(walk);}})(obj);return out;}
+async function load(files){for(const f of files){try{const data=JSON.parse(await f.text());const isFollowing=/following/i.test(f.name)||(data&&data.relationships_following);
+const target=isFollowing?following:(/follower/i.test(f.name)?followers:null);if(!target)continue;extract(data).forEach(x=>target.set(x.u,x.t));}catch(e){alert('No pude leer '+f.name);}}
+if(!followers.size&&!following.size)return alert('No encontré seguidores ni seguidos en esos archivos');$('drop').classList.add('hidden');$('app').classList.remove('hidden');render();}
+function lists(){const F=[...followers.keys()],G=[...following.keys()];return{followers:F,following:G,noback:G.filter(u=>!followers.has(u)),fans:F.filter(u=>!following.has(u)),mutual:G.filter(u=>followers.has(u))};}
+function color(u){let h=0;for(const c of u)h=(h*31+c.charCodeAt(0))%360;return`hsl(${h},60%,45%)`;}
+function render(){const L=lists();for(const k in L)$('n-'+k).textContent=L[k].length;const q=$('q').value.toLowerCase();
+const items=L[tab].filter(u=>u.includes(q)&&!(hideDone&&done.has(u))).sort();
+$('list').innerHTML=items.map(u=>{const t=following.get(u)||followers.get(u);const d=t?new Date(t*1000).toLocaleDateString('es-ES'):'';
+return`<div class="card ${done.has(u)?'done':''}"><div class="av" style="background:${color(u)}">${u[0].toUpperCase()}</div><div class="name">@${u}<small>${d?'desde '+d:''}</small></div><a class="btn" href="https://www.instagram.com/${u}/" target="_blank" onclick="mark('${u}',true)">Dejar de seguir</a><button class="chk" onclick="mark('${u}')">${done.has(u)?'↺':'✓'}</button></div>`}).join('')||'<p style="color:#888">Nadie por aquí 🎉</p>';}
+function mark(u,only){if(done.has(u)&&!only)done.delete(u);else done.add(u);localStorage.setItem('done',JSON.stringify([...done]));setTimeout(render,50);}
+document.querySelectorAll('.stat').forEach(s=>s.onclick=()=>{document.querySelectorAll('.stat').forEach(x=>x.classList.remove('active'));s.classList.add('active');tab=s.dataset.tab;render();});
+$('q').oninput=render;$('hide').onclick=()=>{hideDone=!hideDone;$('hide').textContent=hideDone?'Mostrar todos':'Ocultar ya revisados';render();};
+$('reset').onclick=()=>{followers.clear();following.clear();$('app').classList.add('hidden');$('drop').classList.remove('hidden');};
+const drop=$('drop');drop.onclick=()=>$('file').click();$('file').onchange=e=>load(e.target.files);
+drop.ondragover=e=>{e.preventDefault();drop.classList.add('over')};drop.ondragleave=()=>drop.classList.remove('over');
+drop.ondrop=e=>{e.preventDefault();drop.classList.remove('over');load(e.dataTransfer.files)};
+</script></body></html>
