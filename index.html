@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Rubeats · Seguidores</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' width='72' height='72' aria-label='Mascota'%3E%3Cdefs%3E%3ClinearGradient id='lg' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ff5f6d'/%3E%3Cstop offset='1' stop-color='%23c2185b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M50 88 L14 52 C2 40 6 18 24 14 C36 11 45 18 50 26 C55 18 64 11 76 14 C94 18 98 40 86 52 Z' fill='url(%23lg)'/%3E%3Cpath d='M50 26 L44 40 L54 50 L46 62 L52 74' fill='none' stroke='%230d0d14' stroke-width='4' stroke-linejoin='round'/%3E%3Cg stroke='%23fff' stroke-width='5' stroke-linecap='round'%3E%3Cpath d='M24 34 L34 44 M34 34 L24 44'/%3E%3Cpath d='M66 34 L76 44 M76 34 L66 44'/%3E%3C/g%3E%3Cg stroke='%230d0d14' stroke-width='4' stroke-linecap='round'%3E%3Cpath d='M21 27 L35 31'/%3E%3Cpath d='M79 27 L65 31'/%3E%3C/g%3E%3Cpath d='M36 64 Q50 54 64 64' fill='none' stroke='%23fff' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E"><title>Rubeats · Seguidores</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
 body{background:#0d0d14;color:#eee;min-height:100vh;padding:24px}
@@ -10,7 +10,8 @@ p.sub{color:#999;margin-bottom:20px}
 #drop:hover,#drop.over{border-color:#dd2a7b;background:#1a1020}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:24px 0}
 .stat{background:#181824;border-radius:14px;padding:16px;cursor:pointer;border:2px solid transparent;transition:.2s}
-.stat.active{border-color:#dd2a7b}.stat b{font-size:30px;display:block}.stat span{color:#aaa;font-size:13px}
+.stat.active{border-color:#dd2a7b}header svg{flex-shrink:0;filter:drop-shadow(0 4px 12px #c2185b66);animation:sh 3s infinite}@keyframes sh{0%,90%,100%{transform:rotate(0)}93%{transform:rotate(-8deg)}96%{transform:rotate(8deg)}}
+.stat b{font-size:30px;display:block}.stat span{color:#aaa;font-size:13px}
 .bar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
 input[type=search]{flex:1;min-width:200px;padding:12px;border-radius:10px;border:none;background:#181824;color:#eee}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
@@ -24,7 +25,7 @@ a.btn{background:linear-gradient(90deg,#dd2a7b,#8134af);color:#fff}
 button.chk{background:#2a2a3a;color:#ccc}
 .hidden{display:none}
 </style></head><body>
-<h1>Rubeats · Seguidores</h1>
+<header style="display:flex;align-items:center;gap:14px;margin-bottom:6px"><svg viewBox="0 0 100 100" width="72" height="72" aria-label="Mascota"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff5f6d"/><stop offset="1" stop-color="#c2185b"/></linearGradient></defs><path d="M50 88 L14 52 C2 40 6 18 24 14 C36 11 45 18 50 26 C55 18 64 11 76 14 C94 18 98 40 86 52 Z" fill="url(#lg)"/><path d="M50 26 L44 40 L54 50 L46 62 L52 74" fill="none" stroke="#0d0d14" stroke-width="4" stroke-linejoin="round"/><g stroke="#fff" stroke-width="5" stroke-linecap="round"><path d="M24 34 L34 44 M34 34 L24 44"/><path d="M66 34 L76 44 M76 34 L66 44"/></g><g stroke="#0d0d14" stroke-width="4" stroke-linecap="round"><path d="M21 27 L35 31"/><path d="M79 27 L65 31"/></g><path d="M36 64 Q50 54 64 64" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg><h1 style="margin:0">Rubeats · Seguidores</h1></header>
 <p class="sub">Importa los archivos de Instagram (followers_1.json y following.json). Todo se procesa en tu navegador, nada se sube a ningún sitio.</p>
 <div id="drop">📂 Arrastra aquí tus archivos JSON o haz clic para elegirlos<input type="file" id="file" multiple accept=".json" class="hidden"></div>
 <div id="app" class="hidden">
