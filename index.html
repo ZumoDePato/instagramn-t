@@ -114,6 +114,8 @@ select{padding:12px;border-radius:12px;border:1px solid var(--line);background:v
 .card.done{opacity:.4}
 .card.done .who b{text-decoration:line-through}
 .av{width:46px;height:46px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;font-weight:800;font-size:18px;color:#fff;position:relative}
+.av img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;object-fit:cover;opacity:0;transition:opacity .3s}
+.av img.ok{opacity:1}
 .av::after{content:"";position:absolute;inset:-3px;border-radius:50%;border:2px solid var(--ring,transparent)}
 .who{flex:1 1 0;min-width:0;overflow:hidden}
 .who b{display:block;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -174,7 +176,7 @@ select{padding:12px;border-radius:12px;border:1px solid var(--line);background:v
     <span class="cta">📂 Elegir archivo</span>
     <input type="file" id="file" multiple accept=".zip,.json,application/zip,application/json" class="hidden">
   </div>
-  <div class="privacy">🔒 <span>Todo se procesa dentro de tu navegador. Tus datos no se suben a ningún sitio ni se comparten con nadie.</span></div>
+  <div class="privacy">🔒 <span>Todo se procesa dentro de tu navegador. Tus datos no se suben a ningún sitio. Para las fotos de perfil, la app pide la imagen de cada usuario a unavatar.io.</span></div>
 
   <div class="guide">
     <h2>¿Cómo consigo mis archivos?</h2>
@@ -242,6 +244,8 @@ select{padding:12px;border-radius:12px;border:1px solid var(--line);background:v
   </div>
 
   <div class="tabs" id="tabs"></div>
+
+  <div class="warn hidden" id="incomplete" style="margin:0 0 12px">⚠️ <b>Parece que tu exportación está incompleta.</b> Casi nadie aparece como mutuo, así que la lista de "No te siguen" puede no ser fiable. Normalmente pasa porque el rango de fechas no era <b>Desde el principio</b>. Pide otra exportación con ese rango, pulsa ⟳ arriba y súbela.</div>
 
   <div class="progress hidden" id="progress">
     <span>Revisados <b id="pDone">0</b> de <b id="pTot">0</b></span>
@@ -343,7 +347,7 @@ function extract(obj) {
         let u = s.value || o.title || '';
         if (!u && s.href) u = s.href.replace(/\/+$/, '').split('/').pop();
         u = String(u).trim().replace(/^@/, '').toLowerCase();
-        if (u) out.push([u, s.timestamp || 0]);
+        if (u && !isDeleted(u)) out.push([u, s.timestamp || 0]);
       } else Object.values(o).forEach(walk);
     }
   })(obj);
@@ -394,6 +398,8 @@ function save() {
 }
 
 /* ---------- vistas ---------- */
+function isDeleted(u) { return /^_*deleted_/i.test(u) || /^__deleted__/i.test(u); }
+
 function lists() {
   const F = [...followers.keys()], G = [...following.keys()];
   return {
@@ -422,6 +428,8 @@ function renderSummary() {
   $('headline').innerHTML = nb
     ? `<em>${nb}</em> ${nb === 1 ? 'persona no te sigue' : 'personas no te siguen'} de vuelta`
     : '¡Todo el mundo te sigue de vuelta! 🎉';
+  const small = Math.min(L.followers.length, L.following.length);
+  $('incomplete').classList.toggle('hidden', !(small >= 10 && L.mutual.length < small * 0.1));
   const total = L.mutual.length + L.noback.length + L.fans.length || 1;
   const seg = [['Mutuos', L.mutual.length, 'var(--green)'], ['No te siguen', L.noback.length, 'var(--red)'], ['Fans', L.fans.length, 'var(--orange)']];
   $('bar').innerHTML = seg.map(([, n, c]) => `<div style="width:${n / total * 100}%;background:${c}"></div>`).join('');
@@ -464,7 +472,7 @@ function render() {
     const isDone = done.has(u);
     const canUnf = following.has(u);
     return `<div class="card ${isDone ? 'done' : ''}" data-u="${esc(u)}" style="animation-delay:${Math.min(i, 20) * 15}ms">
-      <div class="av" style="background:linear-gradient(135deg,hsl(${h},75%,58%),hsl(${(h + 50) % 360},70%,45%));--ring:${bc}">${esc(u[0].toUpperCase())}</div>
+      <div class="av" style="background:linear-gradient(135deg,hsl(${h},75%,58%),hsl(${(h + 50) % 360},70%,45%));--ring:${bc}">${esc(u[0].toUpperCase())}<img src="https://unavatar.io/instagram/${encodeURIComponent(u)}?fallback=false" loading="lazy" alt="" referrerpolicy="no-referrer" onload="this.classList.add('ok')" onerror="this.remove()"></div>
       <div class="who"><b>@${esc(u)}</b><small>${esc(since)}</small><span class="badge" style="--c:${bc}">${bl}</span></div>
       <div class="act">
         <a class="unf ${canUnf ? '' : 'soft'}" href="https://www.instagram.com/${encodeURIComponent(u)}/" target="_blank" rel="noopener" data-open>${canUnf ? 'Dejar de seguir' : 'Ver perfil'}</a>
@@ -522,8 +530,8 @@ drop.addEventListener('drop', e => { e.preventDefault(); drop.classList.remove('
 /* ---------- arranque: recuperar datos guardados ---------- */
 const saved = store.get('ig_data', null);
 if (saved && (saved.followers?.length || saved.following?.length)) {
-  followers = new Map(saved.followers || []);
-  following = new Map(saved.following || []);
+  followers = new Map((saved.followers || []).filter(([u]) => !isDeleted(u)));
+  following = new Map((saved.following || []).filter(([u]) => !isDeleted(u)));
   show();
 }
 })();
