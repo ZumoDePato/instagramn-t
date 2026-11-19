@@ -1,63 +1,517 @@
 <!DOCTYPE html>
-<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<link rel="icon" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' width='72' height='72' aria-label='Mascota'%3E%3Cdefs%3E%3ClinearGradient id='lg' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ff5f6d'/%3E%3Cstop offset='1' stop-color='%23c2185b'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M50 88 L14 52 C2 40 6 18 24 14 C36 11 45 18 50 26 C55 18 64 11 76 14 C94 18 98 40 86 52 Z' fill='url(%23lg)'/%3E%3Cpath d='M50 26 L44 40 L54 50 L46 62 L52 74' fill='none' stroke='%230d0d14' stroke-width='4' stroke-linejoin='round'/%3E%3Cg stroke='%23fff' stroke-width='5' stroke-linecap='round'%3E%3Cpath d='M24 34 L34 44 M34 34 L24 44'/%3E%3Cpath d='M66 34 L76 44 M76 34 L66 44'/%3E%3C/g%3E%3Cg stroke='%230d0d14' stroke-width='4' stroke-linecap='round'%3E%3Cpath d='M21 27 L35 31'/%3E%3Cpath d='M79 27 L65 31'/%3E%3C/g%3E%3Cpath d='M36 64 Q50 54 64 64' fill='none' stroke='%23fff' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E"><link rel="apple-touch-icon" href="icon-180.png"><link rel="manifest" href="manifest.json"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Instagramn't"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="theme-color" content="#0d0d14"><title>Instagramn't</title>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Instagramn't">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0b0b12">
+<title>Instagramn't</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
-body{background:#0d0d14;color:#eee;min-height:100vh;padding:24px;padding-top:max(24px,env(safe-area-inset-top))}
-h1{font-size:28px;background:linear-gradient(90deg,#f58529,#dd2a7b,#8134af);-webkit-background-clip:text;color:transparent;margin-bottom:6px}
-p.sub{color:#999;margin-bottom:20px}
-#drop{border:2px dashed #444;border-radius:16px;padding:40px;text-align:center;cursor:pointer;transition:.2s}
-#drop:hover,#drop.over{border-color:#dd2a7b;background:#1a1020}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:24px 0}
-.stat{background:#181824;border-radius:14px;padding:16px;cursor:pointer;border:2px solid transparent;transition:.2s}
-.stat.active{border-color:#dd2a7b}header svg{flex-shrink:0;filter:drop-shadow(0 4px 12px #c2185b66);animation:sh 3s infinite}@keyframes sh{0%,90%,100%{transform:rotate(0)}93%{transform:rotate(-8deg)}96%{transform:rotate(8deg)}}
-.stat b{font-size:30px;display:block}.stat span{color:#aaa;font-size:13px}
-.bar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
-input[type=search]{flex:1;min-width:200px;padding:12px;border-radius:10px;border:none;background:#181824;color:#eee}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
-.card{background:#181824;border-radius:12px;padding:12px;display:flex;align-items:center;gap:12px;transition:.2s}
-.card.done{opacity:.35}
-.av{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:700;flex-shrink:0}
-.name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.name small{display:block;color:#888;font-size:11px}
-button,a.btn{border:none;border-radius:8px;padding:8px 12px;cursor:pointer;font-weight:600;text-decoration:none;font-size:13px}
-a.btn{background:linear-gradient(90deg,#dd2a7b,#8134af);color:#fff}
-button.chk{background:#2a2a3a;color:#ccc}
-.hidden{display:none}
-</style></head><body>
-<header style="display:flex;align-items:center;gap:14px;margin-bottom:6px"><svg viewBox="0 0 100 100" width="72" height="72" aria-label="Mascota"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff5f6d"/><stop offset="1" stop-color="#c2185b"/></linearGradient></defs><path d="M50 88 L14 52 C2 40 6 18 24 14 C36 11 45 18 50 26 C55 18 64 11 76 14 C94 18 98 40 86 52 Z" fill="url(#lg)"/><path d="M50 26 L44 40 L54 50 L46 62 L52 74" fill="none" stroke="#0d0d14" stroke-width="4" stroke-linejoin="round"/><g stroke="#fff" stroke-width="5" stroke-linecap="round"><path d="M24 34 L34 44 M34 34 L24 44"/><path d="M66 34 L76 44 M76 34 L66 44"/></g><g stroke="#0d0d14" stroke-width="4" stroke-linecap="round"><path d="M21 27 L35 31"/><path d="M79 27 L65 31"/></g><path d="M36 64 Q50 54 64 64" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg><h1 style="margin:0">Instagramn't</h1></header>
-<p class="sub">Importa los archivos de Instagram (followers_1.json y following.json). Todo se procesa en tu navegador, nada se sube a ningún sitio.</p>
-<div id="drop">📂 Arrastra aquí tus archivos JSON o haz clic para elegirlos<input type="file" id="file" multiple accept=".json" class="hidden"></div>
-<div id="app" class="hidden">
- <div class="stats">
-  <div class="stat active" data-tab="noback"><b id="n-noback">0</b><span>No me siguen de vuelta</span></div>
-  <div class="stat" data-tab="fans"><b id="n-fans">0</b><span>Me siguen y yo no</span></div>
-  <div class="stat" data-tab="mutual"><b id="n-mutual">0</b><span>Mutuos</span></div>
-  <div class="stat" data-tab="followers"><b id="n-followers">0</b><span>Seguidores</span></div>
-  <div class="stat" data-tab="following"><b id="n-following">0</b><span>Seguidos</span></div>
- </div>
- <div class="bar"><input type="search" id="q" placeholder="Buscar usuario..."><button class="chk" id="hide">Ocultar ya revisados</button><button class="chk" id="reset">Importar otros</button></div>
- <div class="grid" id="list"></div>
+:root{
+  --bg:#0b0b12;--bg2:#12121c;--card:#171724;--card2:#1e1e2e;--line:#2a2a3d;
+  --txt:#f2f2f7;--mute:#9a9ab0;--dim:#6b6b80;
+  --pink:#ff3d7f;--orange:#ff8a3d;--purple:#8b5cf6;--green:#22c55e;--blue:#38bdf8;--red:#ff4d5e;
+  --grad:linear-gradient(120deg,var(--orange),var(--pink) 50%,var(--purple));
+  --r:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Rounded","Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;
+  padding:max(20px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(40px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));
+  background-image:radial-gradient(900px 500px at 10% -10%,#ff3d7f22,transparent 60%),radial-gradient(800px 500px at 110% 10%,#8b5cf622,transparent 60%);background-attachment:fixed}
+.wrap{max-width:1040px;margin:0 auto}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:none;background:none}
+.hidden{display:none!important}
+
+/* Header */
+header{display:flex;align-items:center;gap:14px;margin:8px 0 22px}
+.logo{width:58px;height:58px;flex-shrink:0;filter:drop-shadow(0 6px 16px #ff3d7f55);animation:shake 4s infinite}
+@keyframes shake{0%,88%,100%{transform:rotate(0)}91%{transform:rotate(-9deg)}94%{transform:rotate(9deg)}97%{transform:rotate(-4deg)}}
+h1{font-size:clamp(26px,6vw,36px);font-weight:800;letter-spacing:-.02em;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.05}
+.tag{color:var(--mute);font-size:14px;margin-top:4px}
+header .spacer{flex:1}
+.ghost{padding:10px 14px;border-radius:12px;background:var(--card);border:1px solid var(--line);font-size:13px;font-weight:600;color:var(--mute);white-space:nowrap}
+.ghost:hover{color:var(--txt);border-color:#3a3a52}
+
+/* Import */
+.drop{position:relative;border-radius:24px;padding:34px 20px;text-align:center;cursor:pointer;background:var(--bg2);border:2px dashed #34344a;transition:.2s}
+.drop:hover,.drop.over{border-color:var(--pink);background:#1a1220;transform:translateY(-2px)}
+.drop .big{font-size:20px;font-weight:700;margin:14px 0 6px}
+.drop .small{color:var(--mute);font-size:14px}
+.drop .chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.chip{font-size:12px;padding:6px 10px;border-radius:99px;background:var(--card2);color:var(--mute);border:1px solid var(--line)}
+.chip b{color:var(--txt)}
+.cta{display:inline-flex;align-items:center;gap:8px;margin-top:18px;padding:13px 22px;border-radius:14px;background:var(--grad);color:#fff;font-weight:700;box-shadow:0 8px 24px #ff3d7f44}
+.privacy{display:flex;gap:10px;align-items:flex-start;margin:14px 4px 0;color:var(--dim);font-size:13px;line-height:1.45}
+
+.guide{margin-top:28px}
+.guide h2{font-size:20px;margin-bottom:4px}
+.guide .sub{color:var(--mute);font-size:14px;margin-bottom:16px}
+.steps{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));counter-reset:s}
+.step{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;position:relative;overflow:hidden}
+.step::before{counter-increment:s;content:counter(s);position:absolute;right:10px;top:-6px;font-size:64px;font-weight:900;color:#ffffff08}
+.step .ico{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:20px;margin-bottom:10px;background:var(--card2)}
+.step h3{font-size:15px;margin-bottom:6px}
+.step p{font-size:13.5px;color:var(--mute);line-height:1.5}
+.step .path{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.step .path span{font-size:12px;padding:4px 8px;border-radius:8px;background:#ffffff0d;color:var(--txt)}
+.step .path i{font-style:normal;color:var(--dim);font-size:12px;align-self:center}
+.step.key{border-color:#ff3d7f66;background:linear-gradient(180deg,#ff3d7f14,var(--card))}
+.warn{margin-top:14px;padding:14px 16px;border-radius:14px;background:#ff8a3d14;border:1px solid #ff8a3d44;font-size:13.5px;color:#ffc9a3;line-height:1.5}
+
+/* Results */
+.hero{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:24px;padding:20px;margin-bottom:14px}
+.ring{position:relative;width:132px;height:132px}
+.ring svg{transform:rotate(-90deg)}
+.ring .c{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.ring .pct{font-size:28px;font-weight:800;line-height:1}
+.ring .lab{font-size:10px;color:var(--mute);margin:4px auto 0;max-width:74px;line-height:1.25}
+.hero h2{font-size:clamp(18px,4.5vw,24px);line-height:1.25;margin-bottom:12px}
+.hero h2 em{font-style:normal;color:var(--red)}
+.bar{display:flex;height:14px;border-radius:99px;overflow:hidden;background:var(--card2)}
+.bar div{height:100%;transition:width .6s}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font-size:12.5px;color:var(--mute)}
+.legend span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:6px;background:var(--c)}
+
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px}
+.tab{background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:14px 12px;text-align:left;transition:.15s;position:relative;overflow:hidden}
+.tab::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--c);opacity:.35}
+.tab .e{font-size:18px}
+.tab b{display:block;font-size:26px;font-weight:800;margin:4px 0 2px;letter-spacing:-.02em}
+.tab span{font-size:12px;color:var(--mute);line-height:1.2;display:block}
+.tab.on{border-color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--card))}
+.tab.on::after{opacity:1}
+
+.progress{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:12px;font-size:13px;color:var(--mute)}
+.progress .pb{flex:1;height:8px;border-radius:99px;background:var(--card2);overflow:hidden}
+.progress .pb div{height:100%;background:var(--grad);border-radius:99px;transition:width .4s}
+.progress b{color:var(--txt)}
+
+.tools{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.search{flex:1;min-width:180px;position:relative}
+.search input{width:100%;padding:12px 14px 12px 38px;border-radius:12px;border:1px solid var(--line);background:var(--card);outline:none;font-size:16px}
+.search input:focus{border-color:var(--pink)}
+.search::before{content:"🔍";position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:14px;opacity:.6}
+select{padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--card);font-size:14px}
+.toggle{padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--card);font-size:14px;color:var(--mute)}
+.toggle.on{color:var(--txt);border-color:var(--pink)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(400px,1fr));gap:10px}
+.card{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px;transition:.25s;animation:in .3s both}
+@keyframes in{from{opacity:0;transform:translateY(6px)}}
+.card.done{opacity:.4}
+.card.done .who b{text-decoration:line-through}
+.av{width:46px;height:46px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;font-weight:800;font-size:18px;color:#fff;position:relative}
+.av::after{content:"";position:absolute;inset:-3px;border-radius:50%;border:2px solid var(--ring,transparent)}
+.who{flex:1;min-width:0}
+.who b{display:block;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.who small{display:block;color:var(--dim);font-size:12px;margin-top:2px}
+.badge{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:99px;margin-top:5px;background:color-mix(in srgb,var(--c) 18%,transparent);color:var(--c)}
+.act{display:flex;gap:6px;align-items:center}
+.unf{padding:9px 11px;border-radius:10px;background:var(--grad);color:#fff;font-weight:700;font-size:12.5px;text-decoration:none;white-space:nowrap}
+.unf.soft{background:var(--card2);color:var(--txt);border:1px solid var(--line)}
+.chk{width:36px;height:36px;border-radius:10px;background:var(--card2);border:1px solid var(--line);display:grid;place-items:center;font-size:15px;color:var(--mute)}
+.card.done .chk{background:var(--green);border-color:var(--green);color:#fff}
+.empty{grid-column:1/-1;text-align:center;padding:50px 20px;color:var(--mute)}
+.empty .e{font-size:48px;margin-bottom:10px}
+.more{grid-column:1/-1;margin:6px auto 0;padding:12px 20px;border-radius:12px;background:var(--card);border:1px solid var(--line);color:var(--mute);font-weight:600}
+.foot{color:var(--dim);font-size:12px;text-align:center;margin-top:24px}
+
+.toast{position:fixed;left:50%;bottom:max(20px,env(safe-area-inset-bottom));transform:translate(-50%,120px);background:#262638;border:1px solid var(--line);padding:12px 18px;border-radius:14px;font-size:14px;box-shadow:0 10px 30px #0008;transition:.3s;z-index:9;max-width:calc(100% - 32px);text-align:center}
+.toast.show{transform:translate(-50%,0)}
+
+@media (max-width:720px){
+  .tabs{grid-template-columns:repeat(2,1fr);gap:8px}
+  .tabs .tab:first-child{grid-column:1/-1}
+  .tab{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:10px;align-items:center;padding:10px 12px}
+  .tab .e{grid-row:1/3;font-size:22px}
+  .tab b{font-size:22px;margin:0}
+  .tab span:last-child{font-size:11.5px}
+  .hero{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .legend{justify-content:center}
+  header .ghost .t{display:none}
+}
+@media (max-width:400px){.grid{grid-template-columns:1fr}.unf{padding:9px 10px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <svg class="logo" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff5f6d"/><stop offset="1" stop-color="#c2185b"/></linearGradient></defs><path d="M50 88 L14 52 C2 40 6 18 24 14 C36 11 45 18 50 26 C55 18 64 11 76 14 C94 18 98 40 86 52 Z" fill="url(#lg)"/><path d="M50 26 L44 40 L54 50 L46 62 L52 74" fill="none" stroke="#0b0b12" stroke-width="4" stroke-linejoin="round"/><g stroke="#fff" stroke-width="5" stroke-linecap="round"><path d="M24 34 L34 44 M34 34 L24 44"/><path d="M66 34 L76 44 M76 34 L66 44"/></g><g stroke="#0b0b12" stroke-width="4" stroke-linecap="round"><path d="M21 27 L35 31"/><path d="M79 27 L65 31"/></g><path d="M36 64 Q50 54 64 64" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg>
+  <div>
+    <h1>Instagramn't</h1>
+    <div class="tag">Descubre quién no te sigue de vuelta</div>
+  </div>
+  <div class="spacer"></div>
+  <button class="ghost hidden" id="btnNew">⟳ <span class="t">Importar de nuevo</span></button>
+</header>
+
+<!-- ============ IMPORTAR ============ -->
+<section id="viewImport">
+  <div class="drop" id="drop" role="button" tabindex="0">
+    <svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true"><rect x="8" y="14" width="48" height="40" rx="10" fill="#ff3d7f22" stroke="#ff3d7f" stroke-width="2.5"/><path d="M32 22v20M23 33l9 9 9-9" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="big">Sube tus datos de Instagram</div>
+    <div class="small">Arrastra aquí el archivo o toca para elegirlo</div>
+    <div class="chips">
+      <span class="chip">📦 El <b>.zip</b> tal cual te lo da Instagram</span>
+      <span class="chip">o <b>followers_1.json</b> + <b>following.json</b></span>
+    </div>
+    <span class="cta">📂 Elegir archivo</span>
+    <input type="file" id="file" multiple accept=".zip,.json,application/zip,application/json" class="hidden">
+  </div>
+  <div class="privacy">🔒 <span>Todo se procesa dentro de tu navegador. Tus datos no se suben a ningún sitio ni se comparten con nadie.</span></div>
+
+  <div class="guide">
+    <h2>¿Cómo consigo mis archivos?</h2>
+    <p class="sub">Instagram te los da gratis. Solo hay que pedirlos una vez y tarda unos minutos.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="ico">👤</div>
+        <h3>Abre el Centro de cuentas</h3>
+        <p>En la app de Instagram, ve a tu perfil y toca el menú de arriba a la derecha.</p>
+        <div class="path"><span>Perfil</span><i>›</i><span>☰ Menú</span><i>›</i><span>Centro de cuentas</span></div>
+      </div>
+      <div class="step">
+        <div class="ico">📤</div>
+        <h3>Exporta tu información</h3>
+        <p>Entra en tu información y elige exportarla a tu dispositivo.</p>
+        <div class="path"><span>Tu información y permisos</span><i>›</i><span>Exportar tu información</span><i>›</i><span>Crear exportación</span></div>
+      </div>
+      <div class="step key">
+        <div class="ico">✅</div>
+        <h3>Marca solo lo necesario</h3>
+        <p>Elige tu cuenta, <b>Exportar al dispositivo</b> y en "Personalizar información" deja marcado solo esto:</p>
+        <div class="path"><span>Conexiones</span><i>›</i><span>Seguidores y seguidos</span></div>
+      </div>
+      <div class="step key">
+        <div class="ico">⚙️</div>
+        <h3>Muy importante: el formato</h3>
+        <p>Antes de iniciar la exportación, cambia estas opciones:</p>
+        <div class="path"><span>Intervalo: Desde el principio</span><span>Formato: JSON</span></div>
+      </div>
+      <div class="step">
+        <div class="ico">⏳</div>
+        <h3>Espera el aviso</h3>
+        <p>Toca <b>Iniciar exportación</b>. Instagram te avisará por notificación o correo cuando esté lista, normalmente en unos minutos.</p>
+      </div>
+      <div class="step">
+        <div class="ico">📥</div>
+        <h3>Descarga y súbela aquí</h3>
+        <p>Descarga el <b>.zip</b> desde el mismo sitio y súbelo arriba tal cual. No hace falta descomprimirlo.</p>
+      </div>
+    </div>
+    <div class="warn">⚠️ Si eliges <b>HTML</b> en vez de <b>JSON</b>, la app no podrá leer los archivos y tendrás que pedir la exportación otra vez. Los nombres de los menús pueden cambiar un poco según la versión de Instagram.</div>
+  </div>
+</section>
+
+<!-- ============ RESULTADOS ============ -->
+<section id="viewResults" class="hidden">
+  <div class="hero">
+    <div class="ring">
+      <svg width="132" height="132" viewBox="0 0 132 132"><circle cx="66" cy="66" r="56" fill="none" stroke="#2a2a3d" stroke-width="14"/><circle id="ringArc" cx="66" cy="66" r="56" fill="none" stroke="url(#rg)" stroke-width="14" stroke-linecap="round" stroke-dasharray="0 999" style="transition:stroke-dasharray .8s"/><defs><linearGradient id="rg"><stop offset="0" stop-color="#22c55e"/><stop offset="1" stop-color="#38bdf8"/></linearGradient></defs></svg>
+      <div class="c"><div><div class="pct" id="pct">0%</div><div class="lab">de los que sigues te siguen</div></div></div>
+    </div>
+    <div style="width:100%">
+      <h2 id="headline"></h2>
+      <div class="bar" id="bar"></div>
+      <div class="legend" id="legend"></div>
+    </div>
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+
+  <div class="progress hidden" id="progress">
+    <span>Revisados <b id="pDone">0</b> de <b id="pTot">0</b></span>
+    <div class="pb"><div id="pBar" style="width:0"></div></div>
+  </div>
+
+  <div class="tools">
+    <label class="search"><input type="search" id="q" placeholder="Buscar @usuario" autocomplete="off" autocapitalize="off"></label>
+    <select id="sort" aria-label="Ordenar">
+      <option value="az">A → Z</option>
+      <option value="new">Más recientes</option>
+      <option value="old">Más antiguos</option>
+    </select>
+    <button class="toggle" id="hide">Ocultar revisados</button>
+  </div>
+
+  <div class="grid" id="list"></div>
+  <div class="foot" id="foot"></div>
+</section>
+
 </div>
+<div class="toast" id="toast"></div>
+
 <script>
-let followers=new Map(),following=new Map(),tab='noback',hideDone=false;
-const done=new Set(JSON.parse(localStorage.getItem('done')||'[]'));
-const $=id=>document.getElementById(id);
-function extract(obj){const out=[];(function walk(o){if(Array.isArray(o))o.forEach(walk);else if(o&&typeof o==='object'){if(o.string_list_data){const s=o.string_list_data[0]||{};const u=s.value||o.title||(s.href||'').split('/').filter(Boolean).pop();if(u)out.push({u:u.toLowerCase(),t:s.timestamp||0});}else Object.values(o).forEach(walk);}})(obj);return out;}
-async function load(files){for(const f of files){try{const data=JSON.parse(await f.text());const isFollowing=/following/i.test(f.name)||(data&&data.relationships_following);
-const target=isFollowing?following:(/follower/i.test(f.name)?followers:null);if(!target)continue;extract(data).forEach(x=>target.set(x.u,x.t));}catch(e){alert('No pude leer '+f.name);}}
-if(!followers.size&&!following.size)return alert('No encontré seguidores ni seguidos en esos archivos');$('drop').classList.add('hidden');$('app').classList.remove('hidden');render();}
-function lists(){const F=[...followers.keys()],G=[...following.keys()];return{followers:F,following:G,noback:G.filter(u=>!followers.has(u)),fans:F.filter(u=>!following.has(u)),mutual:G.filter(u=>followers.has(u))};}
-function color(u){let h=0;for(const c of u)h=(h*31+c.charCodeAt(0))%360;return`hsl(${h},60%,45%)`;}
-function render(){const L=lists();for(const k in L)$('n-'+k).textContent=L[k].length;const q=$('q').value.toLowerCase();
-const items=L[tab].filter(u=>u.includes(q)&&!(hideDone&&done.has(u))).sort();
-$('list').innerHTML=items.map(u=>{const t=following.get(u)||followers.get(u);const d=t?new Date(t*1000).toLocaleDateString('es-ES'):'';
-return`<div class="card ${done.has(u)?'done':''}"><div class="av" style="background:${color(u)}">${u[0].toUpperCase()}</div><div class="name">@${u}<small>${d?'desde '+d:''}</small></div><a class="btn" href="https://www.instagram.com/${u}/" target="_blank" onclick="mark('${u}',true)">Dejar de seguir</a><button class="chk" onclick="mark('${u}')">${done.has(u)?'↺':'✓'}</button></div>`}).join('')||'<p style="color:#888">Nadie por aquí 🎉</p>';}
-function mark(u,only){if(done.has(u)&&!only)done.delete(u);else done.add(u);localStorage.setItem('done',JSON.stringify([...done]));setTimeout(render,50);}
-document.querySelectorAll('.stat').forEach(s=>s.onclick=()=>{document.querySelectorAll('.stat').forEach(x=>x.classList.remove('active'));s.classList.add('active');tab=s.dataset.tab;render();});
-$('q').oninput=render;$('hide').onclick=()=>{hideDone=!hideDone;$('hide').textContent=hideDone?'Mostrar todos':'Ocultar ya revisados';render();};
-$('reset').onclick=()=>{followers.clear();following.clear();$('app').classList.add('hidden');$('drop').classList.remove('hidden');};
-const drop=$('drop');drop.onclick=()=>$('file').click();$('file').onchange=e=>load(e.target.files);
-drop.ondragover=e=>{e.preventDefault();drop.classList.add('over')};drop.ondragleave=()=>drop.classList.remove('over');
-drop.ondrop=e=>{e.preventDefault();drop.classList.remove('over');load(e.dataTransfer.files)};
-</script></body></html>
+(() => {
+const $ = id => document.getElementById(id);
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+  del(k) { try { localStorage.removeItem(k); } catch {} }
+};
+
+let followers = new Map(), following = new Map();
+let tab = 'noback', hideDone = false, limit = 120;
+const done = new Set(store.get('done', []));
+
+const TABS = [
+  { id: 'noback',    e: '💔', label: 'No te siguen de vuelta', c: 'var(--red)' },
+  { id: 'fans',      e: '👀', label: 'Te siguen y tú no',      c: 'var(--orange)' },
+  { id: 'mutual',    e: '🤝', label: 'Mutuos',                  c: 'var(--green)' },
+  { id: 'followers', e: '👥', label: 'Seguidores',              c: 'var(--blue)' },
+  { id: 'following', e: '➡️', label: 'Seguidos',                c: 'var(--purple)' }
+];
+
+/* ---------- utilidades ---------- */
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+function toast(msg, ms = 3200) {
+  const t = $('toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('show'), ms);
+}
+function hue(u) { let h = 0; for (const ch of u) h = (h * 31 + ch.charCodeAt(0)) % 360; return h; }
+const fmt = t => t ? new Date(t * 1000).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+
+/* ---------- lector de ZIP (sin librerías) ---------- */
+async function readZip(buf) {
+  const dv = new DataView(buf), u8 = new Uint8Array(buf);
+  let eocd = -1;
+  for (let i = u8.length - 22; i >= Math.max(0, u8.length - 70000); i--) {
+    if (dv.getUint32(i, true) === 0x06054b50) { eocd = i; break; }
+  }
+  if (eocd < 0) throw new Error('zip');
+  const count = dv.getUint16(eocd + 10, true);
+  let p = dv.getUint32(eocd + 16, true);
+  const dec = new TextDecoder();
+  const out = [];
+  for (let n = 0; n < count; n++) {
+    if (dv.getUint32(p, true) !== 0x02014b50) break;
+    const method = dv.getUint16(p + 10, true);
+    const csize = dv.getUint32(p + 20, true);
+    const nlen = dv.getUint16(p + 28, true), elen = dv.getUint16(p + 30, true), clen = dv.getUint16(p + 32, true);
+    const lho = dv.getUint32(p + 42, true);
+    const name = dec.decode(u8.subarray(p + 46, p + 46 + nlen));
+    p += 46 + nlen + elen + clen;
+    if (!/\.(json|html)$/i.test(name)) continue;
+    const base = name.split('/').pop();
+    if (!/^(followers_\d+|following)\.(json|html)$/i.test(base)) continue;
+    const ds = lho + 30 + dv.getUint16(lho + 26, true) + dv.getUint16(lho + 28, true);
+    const raw = u8.subarray(ds, ds + csize);
+    let data;
+    if (method === 0) data = raw;
+    else if (method === 8) {
+      if (typeof DecompressionStream === 'undefined') throw new Error('nodecomp');
+      const stream = new Blob([raw]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+      data = new Uint8Array(await new Response(stream).arrayBuffer());
+    } else continue;
+    out.push({ name: base, text: dec.decode(data) });
+  }
+  return out;
+}
+
+/* ---------- extraer usuarios del JSON de Instagram ---------- */
+function extract(obj) {
+  const out = [];
+  (function walk(o) {
+    if (Array.isArray(o)) o.forEach(walk);
+    else if (o && typeof o === 'object') {
+      if (Array.isArray(o.string_list_data)) {
+        const s = o.string_list_data[0] || {};
+        let u = s.value || o.title || '';
+        if (!u && s.href) u = s.href.replace(/\/+$/, '').split('/').pop();
+        u = String(u).trim().replace(/^@/, '').toLowerCase();
+        if (u) out.push([u, s.timestamp || 0]);
+      } else Object.values(o).forEach(walk);
+    }
+  })(obj);
+  return out;
+}
+
+function ingest(name, text, counts) {
+  const base = name.split('/').pop().toLowerCase();
+  if (base.endsWith('.html')) { counts.html++; return; }
+  let data;
+  try { data = JSON.parse(text); } catch { counts.bad++; return; }
+  let target = null;
+  if (/^followers_\d+\.json$/.test(base)) target = followers;
+  else if (base === 'following.json' || (data && data.relationships_following)) target = following;
+  if (!target) { counts.skip++; return; }
+  extract(data).forEach(([u, t]) => target.set(u, t));
+  counts.ok++;
+}
+
+async function load(files) {
+  const counts = { ok: 0, html: 0, bad: 0, skip: 0 };
+  toast('Leyendo tus datos…', 10000);
+  for (const f of files) {
+    try {
+      if (/\.zip$/i.test(f.name) || f.type.includes('zip')) {
+        const entries = await readZip(await f.arrayBuffer());
+        entries.forEach(e => ingest(e.name, e.text, counts));
+      } else {
+        ingest(f.name, await f.text(), counts);
+      }
+    } catch (err) {
+      if (err.message === 'nodecomp') return toast('Tu navegador no puede abrir el .zip. Actualiza iOS o descomprímelo y sube los .json.', 6000);
+      counts.bad++;
+    }
+  }
+  if (!followers.size && !following.size) {
+    if (counts.html) return toast('Esa exportación está en HTML. Pide otra en formato JSON (paso 4).', 6000);
+    return toast('No encontré seguidores ni seguidos. Revisa que sea la exportación de "Seguidores y seguidos".', 6000);
+  }
+  if (!followers.size) toast('Falta el archivo de seguidores (followers_1.json).', 5000);
+  else if (!following.size) toast('Falta el archivo de seguidos (following.json).', 5000);
+  else toast(`✅ ${followers.size} seguidores y ${following.size} seguidos importados`);
+  save(); show();
+}
+
+function save() {
+  store.set('ig_data', { followers: [...followers], following: [...following], at: Date.now() });
+}
+
+/* ---------- vistas ---------- */
+function lists() {
+  const F = [...followers.keys()], G = [...following.keys()];
+  return {
+    followers: F, following: G,
+    noback: G.filter(u => !followers.has(u)),
+    fans: F.filter(u => !following.has(u)),
+    mutual: G.filter(u => followers.has(u))
+  };
+}
+
+function show() {
+  $('viewImport').classList.add('hidden');
+  $('viewResults').classList.remove('hidden');
+  $('btnNew').classList.remove('hidden');
+  renderSummary(); render();
+}
+
+function renderSummary() {
+  const L = lists();
+  const G = L.following.length || 1;
+  const pct = Math.round(L.mutual.length / G * 100);
+  const C = 2 * Math.PI * 56;
+  requestAnimationFrame(() => $('ringArc').setAttribute('stroke-dasharray', `${C * pct / 100} ${C}`));
+  $('pct').textContent = pct + '%';
+  const nb = L.noback.length;
+  $('headline').innerHTML = nb
+    ? `<em>${nb}</em> ${nb === 1 ? 'persona no te sigue' : 'personas no te siguen'} de vuelta`
+    : '¡Todo el mundo te sigue de vuelta! 🎉';
+  const total = L.mutual.length + L.noback.length + L.fans.length || 1;
+  const seg = [['Mutuos', L.mutual.length, 'var(--green)'], ['No te siguen', L.noback.length, 'var(--red)'], ['Fans', L.fans.length, 'var(--orange)']];
+  $('bar').innerHTML = seg.map(([, n, c]) => `<div style="width:${n / total * 100}%;background:${c}"></div>`).join('');
+  $('legend').innerHTML = seg.map(([l, n, c]) => `<span style="--c:${c}">${l} · <b style="color:var(--txt)">${n}</b></span>`).join('');
+  $('tabs').innerHTML = TABS.map(t => `<button class="tab ${t.id === tab ? 'on' : ''}" data-tab="${t.id}" style="--c:${t.c}"><span class="e">${t.e}</span><b>${L[t.id].length}</b><span>${t.label}</span></button>`).join('');
+}
+
+function render() {
+  const L = lists();
+  const q = $('q').value.trim().toLowerCase().replace(/^@/, '');
+  const sort = $('sort').value;
+  const time = u => following.get(u) || followers.get(u) || 0;
+  let items = L[tab].filter(u => u.includes(q));
+  if (sort === 'az') items.sort();
+  else items.sort((a, b) => sort === 'new' ? time(b) - time(a) : time(a) - time(b));
+
+  // progreso (solo en "no te siguen")
+  const prog = $('progress');
+  if (tab === 'noback' && L.noback.length) {
+    const d = L.noback.filter(u => done.has(u)).length;
+    prog.classList.remove('hidden');
+    $('pDone').textContent = d; $('pTot').textContent = L.noback.length;
+    $('pBar').style.width = (d / L.noback.length * 100) + '%';
+  } else prog.classList.add('hidden');
+
+  if (hideDone) items = items.filter(u => !done.has(u));
+  const shown = items.slice(0, limit);
+  const T = TABS.find(t => t.id === tab);
+
+  const badge = u => {
+    if (!followers.has(u)) return ['No te sigue', 'var(--red)'];
+    if (!following.has(u)) return ['Te sigue', 'var(--orange)'];
+    return ['Mutuo', 'var(--green)'];
+  };
+
+  $('list').innerHTML = shown.length ? shown.map((u, i) => {
+    const h = hue(u), [bl, bc] = badge(u);
+    const t = following.get(u) || followers.get(u);
+    const since = t ? (following.has(u) ? 'Le sigues desde ' : 'Te sigue desde ') + fmt(t) : '';
+    const isDone = done.has(u);
+    const canUnf = following.has(u);
+    return `<div class="card ${isDone ? 'done' : ''}" data-u="${esc(u)}" style="animation-delay:${Math.min(i, 20) * 15}ms">
+      <div class="av" style="background:linear-gradient(135deg,hsl(${h},75%,58%),hsl(${(h + 50) % 360},70%,45%));--ring:${bc}">${esc(u[0].toUpperCase())}</div>
+      <div class="who"><b>@${esc(u)}</b><small>${esc(since)}</small><span class="badge" style="--c:${bc}">${bl}</span></div>
+      <div class="act">
+        <a class="unf ${canUnf ? '' : 'soft'}" href="https://www.instagram.com/${encodeURIComponent(u)}/" target="_blank" rel="noopener" data-open>${canUnf ? 'Dejar de seguir' : 'Ver perfil'}</a>
+        <button class="chk" data-chk title="Marcar como revisado">${isDone ? '✓' : '○'}</button>
+      </div></div>`;
+  }).join('') + (items.length > limit ? `<button class="more" id="more">Mostrar más (${items.length - limit} restantes)</button>` : '')
+  : `<div class="empty"><div class="e">${q ? '🔎' : (tab === 'noback' ? '🎉' : T.e)}</div>${q ? 'Nadie coincide con esa búsqueda' : (hideDone ? '¡Ya los has revisado todos!' : 'Nadie por aquí')}</div>`;
+
+  const s = store.get('ig_data', null);
+  $('foot').textContent = s && s.at ? 'Datos importados el ' + new Date(s.at).toLocaleDateString('es-ES', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' }) : '';
+}
+
+function toggleDone(u, force) {
+  if (force === true) done.add(u);
+  else if (done.has(u)) done.delete(u); else done.add(u);
+  store.set('done', [...done]);
+}
+
+/* ---------- eventos ---------- */
+$('tabs').addEventListener('click', e => {
+  const b = e.target.closest('.tab'); if (!b) return;
+  tab = b.dataset.tab; limit = 120;
+  document.querySelectorAll('.tab').forEach(x => x.classList.toggle('on', x === b));
+  render();
+});
+$('list').addEventListener('click', e => {
+  if (e.target.id === 'more') { limit += 200; return render(); }
+  const card = e.target.closest('.card'); if (!card) return;
+  const u = card.dataset.u;
+  if (e.target.closest('[data-open]')) { toggleDone(u, true); setTimeout(render, 300); }
+  else if (e.target.closest('[data-chk]')) { toggleDone(u); render(); }
+});
+$('q').addEventListener('input', () => { limit = 120; render(); });
+$('sort').addEventListener('change', render);
+$('hide').addEventListener('click', () => {
+  hideDone = !hideDone;
+  $('hide').classList.toggle('on', hideDone);
+  $('hide').textContent = hideDone ? 'Mostrar revisados' : 'Ocultar revisados';
+  render();
+});
+$('btnNew').addEventListener('click', () => {
+  followers.clear(); following.clear(); store.del('ig_data');
+  $('viewResults').classList.add('hidden'); $('viewImport').classList.remove('hidden'); $('btnNew').classList.add('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+const drop = $('drop'), file = $('file');
+drop.addEventListener('click', () => file.click());
+drop.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); file.click(); } });
+file.addEventListener('change', e => { if (e.target.files.length) load([...e.target.files]); file.value = ''; });
+drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('over'); });
+drop.addEventListener('dragleave', () => drop.classList.remove('over'));
+drop.addEventListener('drop', e => { e.preventDefault(); drop.classList.remove('over'); load([...e.dataTransfer.files]); });
+
+/* ---------- arranque: recuperar datos guardados ---------- */
+const saved = store.get('ig_data', null);
+if (saved && (saved.followers?.length || saved.following?.length)) {
+  followers = new Map(saved.followers || []);
+  following = new Map(saved.following || []);
+  show();
+}
+})();
+</script>
+</body>
+</html>
